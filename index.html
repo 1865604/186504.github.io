@@ -1,1 +1,62 @@
 
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MONDAI Dummy Server</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 650px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f1f5f9;
+      color: #172033;
+    }
+    main {
+      background: white;
+      padding: 24px;
+      border-radius: 16px;
+    }
+    button {
+      padding: 12px 18px;
+      border: 0;
+      border-radius: 8px;
+      background: #174ea6;
+      color: white;
+      font-size: 16px;
+    }
+    #result { overflow-wrap: anywhere; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>MONDAI Dummy Server</h1>
+    <p>ダミーサーバ接続テスト</p>
+    <button id="connect">接続テスト</button>
+    <p id="result">未接続</p>
+  </main>
+
+  <script>
+    const API_URL =
+      "https://ここを実際のCodespacesのURLに置き換える/api/test";
+
+    document.getElementById("connect").onclick = async () => {
+      const result = document.getElementById("result");
+      result.textContent = "接続中...";
+
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) throw new Error("HTTP " + response.status);
+
+        const data = await response.json();
+        result.textContent = data.message;
+      } catch (error) {
+        result.textContent =
+          "接続失敗：URL・CORS・ポート設定を確認してください。";
+      }
+    };
+  </script>
+</body>
+</html>
